@@ -9,7 +9,10 @@ app = FastAPI()
 origins = [
     "http://localhost:5173",  # Vite default port
     "http://localhost:3000",
+    "http://10.129.187.176:5173",  # Add this
+    "http://10.129.187.176:3000",  # optional if using 3000
 ]
+
 
 app.add_middleware(
     CORSMiddleware,
