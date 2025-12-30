@@ -1,5 +1,6 @@
 import '../index.css';
 import { useState, useEffect } from 'react';
+import { getApiUrl } from '../config';
 
 const ANIMALS = ['Lion', 'Tiger', 'Elephant', 'Giraffe', 'Zebra'];
 
@@ -15,7 +16,7 @@ export default function AnimalTabs({ onLogout }) {
     const fetchFact = async (animal) => {
         setLoading(true);
         try {
-            const response = await fetch(`http://localhost:8000/facts/${animal}`);
+            const response = await fetch(`${getApiUrl()}/facts/${animal}`);
             const data = await response.json();
             setFact(data.fact);
         } catch (err) {
