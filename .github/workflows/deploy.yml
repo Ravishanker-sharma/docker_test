@@ -11,18 +11,26 @@ jobs:
     steps:
       - uses: actions/checkout@v3
 
-      - name: Build Docker image
+      - name: Build Docker image backend
         run: docker build -t backend:latest ./backend
+      
+      - name: Build Docker image frontend
         run: docker build -t frontend:latest ./frontend
 
-      - name: Stop old container
+      - name: Stop old container backend
         run: docker stop backend || true
+      
+      - name: Stop old container frontend
         run: docker stop frontend || true
 
-      - name: Remove old container
+      - name: Remove old container backend
         run: docker rm backend || true
+
+      - name: Remove old container frontend
         run: docker rm frontend || true
 
-      - name: Run container
+      - name: Run container backend
         run: docker run -d --name backend -p 8000:8000 backend:latest
+      
+      - name: Run container frontend
         run: docker run -d --name frontend -p 5173:5173 frontend:latest
