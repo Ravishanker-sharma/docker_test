@@ -1,13 +1,28 @@
-name: Test Self Hosted Runner
+name: Auto Deploy to VM
 
 on:
   push:
     branches: [ main ]
 
 jobs:
-  test:
+  deploy:
     runs-on: self-hosted
 
     steps:
-      - name: Say hello
-        run: echo "Runner is working 🎉"
+      - uses: actions/checkout@v3
+
+      - name: Build Docker image
+        run: docker build -t backend:latest ./backend
+        run: docker build -t frontend:latest ./frontend
+
+      - name: Stop old container
+        run: docker stop backend || true
+        run: docker stop frontend || true
+
+      - name: Remove old container
+        run: docker rm backend || true
+        run: docker rm frontend || true
+
+      - name: Run container
+        run: docker run -d --name backend -p 8000:8000 backend:latest
+        run: docker run -d --name frontend -p 5173:5173 frontend:latest
