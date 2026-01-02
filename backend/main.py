@@ -39,7 +39,7 @@ def get_animal_fact(animal: str):
         # Get a summary of the animal from Wikipedia
         # limiting to 2 sentences for brevity
         summary = wikipedia.summary(animal, sentences=2)
-        return {"animal": animal, "fact": summary}
+        return {"animal": animal, "fact": "Here is the Fact about " + animal + ": " + summary}
     except wikipedia.exceptions.PageError:
          raise HTTPException(status_code=404, detail="Animal not found")
     except wikipedia.exceptions.DisambiguationError as e:
